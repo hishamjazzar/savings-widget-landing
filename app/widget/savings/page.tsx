@@ -1,4 +1,5 @@
-import SavingsWidget from '../../components/SavingsCalculator';
+import SavingsCalculator from './components/SavingsCalculator';
+
 
 export default function WidgetPage() {
   return <SavingsWidget />;
