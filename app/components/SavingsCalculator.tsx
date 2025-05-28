@@ -40,7 +40,7 @@ export default function SavingsWidget() {
         </div>
 
         <div className="space-y-6">
-          <h3 className="text-xl font-semibold text-gray-800" style={{ fontFamily: 'DM Sans, sans-serif' }}>Number of Trades per Month</h3>
+          <h3 className="text-xl font-semibold text-gray-800" style={{ fontFamily: 'DM Sans, sans-serif' }}>How many trades do you usually make each month?</h3>
           <div className="flex items-center justify-center gap-4">
             <button className={buttonClass} onClick={() => setTrades(t => Math.max(1, t - 1))}>−</button>
             <div className={valueBox}>{trades}</div>
@@ -59,7 +59,7 @@ export default function SavingsWidget() {
         </div>
 
         <div className="space-y-6">
-          <h3 className="text-xl font-semibold text-gray-800" style={{ fontFamily: 'DM Sans, sans-serif' }}>Average Monthly Trade Value (EGP)</h3>
+          <h3 className="text-xl font-semibold text-gray-800" style={{ fontFamily: 'DM Sans, sans-serif' }}>About how much do you trade in total each month (EGP)?</h3>
           <div className="flex items-center justify-center gap-4">
             <button className={buttonClass} onClick={() => setMonthlyTradeValue(v => Math.max(10000, v - 10000))}>−</button>
             <div className={valueBox}>{monthlyTradeValue.toLocaleString()}</div>
@@ -81,7 +81,7 @@ export default function SavingsWidget() {
           <div className="text-center py-6">
             <div className="bg-gradient-to-r from-yellow-50 to-yellow-100 rounded-2xl p-6 border border-yellow-200">
               <p className="text-lg md:text-xl font-bold text-gray-900" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                You save <span className="text-yellow-600">EGP {savings.toLocaleString()}</span> per year <span className="text-2xl">🤑</span>
+              Looks like you could save <span className="text-yellow-600">EGP {savings.toLocaleString()}</span> a year <span className="text-2xl">🤑</span>
               </p>
             </div>
           </div>
