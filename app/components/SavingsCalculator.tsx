@@ -17,12 +17,7 @@ export default function SavingsWidget() {
   useEffect(() => {
     const totalMonthlyTradeValue = avgTradeValue * trades;
   
-    // Standard cost (non-subscriber)
-    const standardCommission = totalMonthlyTradeValue * yearlyMultiplier * feeRate;
-    const flatTradeFees = trades * 2 * yearlyMultiplier;
-    const standardCost = standardCommission + flatTradeFees;
-  
-    // Old subscription cost
+    // Old subscription cost (what existing subscribers are currently paying)
     const oldSubscriptionFeeAnnual = oldMonthlySubFee * yearlyMultiplier;
     const oldSubscriberCommission = totalMonthlyTradeValue * yearlyMultiplier * feeRate;
     const oldSubscriberFlatFees = trades * 2 * yearlyMultiplier;
@@ -32,6 +27,7 @@ export default function SavingsWidget() {
     const newSubscriptionFeeAnnual = monthlySubFee * yearlyMultiplier;
     let newSubscriberCost = newSubscriptionFeeAnnual;
   
+    // For trades over 50, add commission and flat fees
     if (trades > 50) {
       const paidTrades = trades - 50;
       const paidTradeValue = avgTradeValue * paidTrades;
@@ -42,14 +38,13 @@ export default function SavingsWidget() {
       newSubscriberCost += extraCommission + extraFlatFees;
     }
   
-    // Calculate relevant savings based on subscription type
-    const userSavings = Math.max(0, Math.round(
-      subscriptionType === 'old' 
-        ? oldSubscriberCost - newSubscriberCost 
-        : standardCost - newSubscriberCost
-    ));
+    // Calculate savings based on subscription type
+    const existingSubscriberSavings = oldSubscriberCost - newSubscriberCost;
+    const userSavings = subscriptionType === 'old' 
+      ? existingSubscriberSavings 
+      : existingSubscriberSavings + 1500;
     
-    setSavings(userSavings);
+    setSavings(Math.max(0, Math.round(userSavings)));
   }, [trades, avgTradeValue, subscriptionType]);
   
   const buttonClass = `
