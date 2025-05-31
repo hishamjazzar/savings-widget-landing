@@ -105,7 +105,7 @@ export default function SavingsWidget() {
           <p className="text-gray-500 text-center text-xs font-normal max-w-sm">
             {subscriptionType === 'none' 
               ? "See how much you could save with our subscription plan"
-              : "Compare your current plan (125 EGP/month) with our new pricing"}
+              : "Compare your current plan (125 EGP/month) with our new plan"}
           </p>
         </div>
 
