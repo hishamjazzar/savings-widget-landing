@@ -48,30 +48,30 @@ export default function SavingsWidget() {
   }, [trades, avgTradeValue, subscriptionType]);
   
   const buttonClass = `
-    h-7 w-7 rounded-full border border-[#FFD700] text-[#FFD700] 
-    hover:bg-yellow-50 transition-all duration-200 
-    flex items-center justify-center font-medium text-base bg-white
+    h-7 w-7 rounded-full border border-white text-white
+    hover:bg-gray-800 transition-all duration-200 
+    flex items-center justify-center font-medium text-base bg-transparent
   `;
   const valueBox = `
-    text-gray-600 text-lg font-medium border-[3px] border-[#FFD700] 
-    rounded-full flex items-center justify-center bg-white 
+    text-white text-lg font-medium border-[3px] border-white 
+    rounded-full flex items-center justify-center bg-transparent
     shadow-sm px-6 py-2 min-w-[140px]
   `;
   const sliderClass =
-    'w-full appearance-none h-[3px] bg-gray-200 rounded outline-none cursor-pointer';
+    'w-full appearance-none h-[3px] bg-gray-600 rounded outline-none cursor-pointer';
   const thumbClass = `
     [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 
     [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:rounded-full 
-    [&::-webkit-slider-thumb]:bg-[#FFD700] [&::-webkit-slider-thumb]:border-0 
+    [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:border-0 
     [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:shadow-sm
   `;
   const toggleClass = `
-    relative inline-flex items-center gap-2 bg-white rounded-full p-1 w-[340px] h-[52px] shadow-sm
+    relative inline-flex items-center gap-2 bg-[#0A0A0A] rounded-full p-1 w-[340px] h-[52px] shadow-sm
     transition-colors duration-200 ease-in-out cursor-pointer
   `;
   const toggleButtonClass = `
     absolute ${subscriptionType === 'old' ? 'right-1' : 'left-1'}
-    inline-block h-[44px] w-[164px] transform rounded-full bg-[#FFD700] shadow-sm
+    inline-block h-[44px] w-[164px] transform rounded-full bg-[#45396D] shadow-sm
     transition duration-200 ease-in-out
   `;
   const toggleTextClass = `
@@ -80,7 +80,7 @@ export default function SavingsWidget() {
 
   return (
     <div className="w-full max-w-2xl mx-auto mt-10">
-      <div className="bg-gradient-to-br from-gray-50 to-white rounded-3xl border border-gray-200 shadow-xl p-8">
+      <div className="bg-gradient-to-br from-[#181818] via-[#111111] to-[#111111] rounded-3xl border border-gray-800 shadow-xl p-8">
         {/* Subscription Toggle */}
         <div className="flex flex-col items-center gap-3 mb-6">
           <button
@@ -90,27 +90,27 @@ export default function SavingsWidget() {
             aria-checked={subscriptionType === 'old'}
           >
             <span className={toggleButtonClass} />
-            <span className={`${toggleTextClass} ${subscriptionType === 'none' ? 'text-white' : 'text-gray-600'}`}>
+            <span className={`${toggleTextClass} ${subscriptionType === 'none' ? 'text-white' : 'text-gray-400'}`}>
               Non-Subscriber
             </span>
-            <span className={`${toggleTextClass} ${subscriptionType === 'old' ? 'text-white' : 'text-gray-600'}`}>
+            <span className={`${toggleTextClass} ${subscriptionType === 'old' ? 'text-white' : 'text-gray-400'}`}>
               Existing Subscriber
             </span>
           </button>
-          <p className="text-gray-500 text-center text-xs font-normal max-w-sm">
+          <p className="text-gray-400 text-center text-xs font-normal max-w-sm">
             {subscriptionType === 'none' 
-              ? "See how much you could save with our subscription plan"
-              : "Compare your current plan (125 EGP/month) with our new plan"}
+              ? "See how much you can save with our new plan"
+              : "Assumes you were paying 125 EGP/month (our old plan)"}
           </p>
         </div>
 
         {savings !== null && (
           <div className="text-center mb-4">
-            <div className="text-2xl font-medium text-gray-600 mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+            <div className="text-2xl font-medium text-white mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>
               Annual Savings
             </div>
             <div className="flex justify-center items-end">
-              <span className="text-2xl font-bold text-[#FFD700]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+              <span className="text-2xl font-bold text-[#B892FF]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                 EGP {savings.toLocaleString()}
               </span>
             </div>
@@ -120,7 +120,7 @@ export default function SavingsWidget() {
         <div className="flex flex-col items-center space-y-6">
           {/* Trades per month */}
           <div className="space-y-3 w-full max-w-md">
-            <h3 className="text-base font-medium text-gray-600 text-center mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+            <h3 className="text-base font-medium text-white text-center mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>
               Your average number of trades per month
             </h3>
             <div className="flex items-center justify-center gap-3 mb-2">
@@ -139,20 +139,21 @@ export default function SavingsWidget() {
                 value={trades}
                 onChange={(e) => setTrades(parseInt(e.target.value))}
                 className={`${sliderClass} ${thumbClass}`}
-                style={{ accentColor: '#FFD700' }}
+                style={{ accentColor: 'white' }}
               />
             </div>
           </div>
 
           {/* Average trade value */}
           <div className="space-y-3 w-full max-w-md">
-            <h3 className="text-base font-medium text-gray-600 text-center mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-              Your average value per trade (EGP)
+            <h3 className="text-base font-medium text-white text-center mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+              Your average value per trade
             </h3>
             <div className="flex items-center justify-center gap-3 mb-2">
               <button className={buttonClass} onClick={() => setAvgTradeValue(v => Math.max(10000, v - 10000))}>−</button>
-              <div className={valueBox}>
+              <div className={`${valueBox} relative`}>
                 {avgTradeValue.toLocaleString()}
+                <span className="text-sm ml-1 text-white">EGP</span>
               </div>
               <button className={buttonClass} onClick={() => setAvgTradeValue(v => Math.min(250000, v + 10000))}>+</button>
             </div>
@@ -165,7 +166,7 @@ export default function SavingsWidget() {
                 value={avgTradeValue}
                 onChange={(e) => setAvgTradeValue(parseInt(e.target.value))}
                 className={`${sliderClass} ${thumbClass}`}
-                style={{ accentColor: '#FFD700' }}
+                style={{ accentColor: 'white' }}
               />
             </div>
           </div>
