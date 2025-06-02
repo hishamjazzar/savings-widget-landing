@@ -9,8 +9,8 @@ interface SavingsWidgetProps {
 }
 
 export default function SavingsWidget({ locale = 'en' }: SavingsWidgetProps) {
-  const [trades, setTrades] = useState(10); // monthly trades
-  const [avgTradeValue, setAvgTradeValue] = useState(100000); // value per trade
+  const [trades, setTrades] = useState(5); // monthly trades
+  const [avgTradeValue, setAvgTradeValue] = useState(10000); // value per trade
   const [savings, setSavings] = useState<number | null>(null);
   const [subscriptionType, setSubscriptionType] = useState<SubscriptionType>('none');
   const { t, isRTL } = useTranslations(locale);
@@ -83,6 +83,14 @@ export default function SavingsWidget({ locale = 'en' }: SavingsWidgetProps) {
   const toggleTextClass = `
     z-10 w-[164px] text-center text-sm transition-colors duration-200
   `;
+
+  const handleAvgTradeValueChange = (newValue: number) => {
+    // Ensure the value is rounded to the nearest 1000
+    const roundedValue = Math.round(newValue / 1000) * 1000;
+    // Ensure the value stays within bounds
+    const boundedValue = Math.min(250000, Math.max(10000, roundedValue));
+    setAvgTradeValue(boundedValue);
+  };
 
   return (
     <div className={`w-full max-w-2xl mx-auto mt-10 ${isRTL ? 'rtl' : 'ltr'}`}>
@@ -164,7 +172,10 @@ export default function SavingsWidget({ locale = 'en' }: SavingsWidgetProps) {
               {t.savings.valuePerTrade}
             </h3>
             <div className="flex items-center justify-center gap-3 mb-2">
-              <button className={buttonClass} onClick={() => setAvgTradeValue(v => Math.max(10000, v - 10000))}>−</button>
+              <button 
+                className={buttonClass} 
+                onClick={() => handleAvgTradeValueChange(avgTradeValue - 1000)}
+              >−</button>
               <div className={`${valueBox} relative`}>
                 <div className="flex items-center gap-1">
                   {t.savings.currencyPosition === 'left' && (
@@ -176,16 +187,19 @@ export default function SavingsWidget({ locale = 'en' }: SavingsWidgetProps) {
                   )}
                 </div>
               </div>
-              <button className={buttonClass} onClick={() => setAvgTradeValue(v => Math.min(250000, v + 10000))}>+</button>
+              <button 
+                className={buttonClass} 
+                onClick={() => handleAvgTradeValueChange(avgTradeValue + 1000)}
+              >+</button>
             </div>
             <div className="px-8">
               <input
                 type="range"
                 min="10000"
                 max="250000"
-                step="10000"
+                step="1000"
                 value={avgTradeValue}
-                onChange={(e) => setAvgTradeValue(parseInt(e.target.value))}
+                onChange={(e) => handleAvgTradeValueChange(parseInt(e.target.value))}
                 className={`${sliderClass} ${thumbClass}`}
                 style={{ accentColor: 'white' }}
               />
