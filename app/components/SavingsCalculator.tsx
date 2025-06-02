@@ -1,13 +1,19 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { useTranslations, type Locale } from '../hooks/useTranslations';
 
 type SubscriptionType = 'none' | 'old';
 
-export default function SavingsWidget() {
+interface SavingsWidgetProps {
+  locale?: Locale;
+}
+
+export default function SavingsWidget({ locale = 'en' }: SavingsWidgetProps) {
   const [trades, setTrades] = useState(10); // monthly trades
   const [avgTradeValue, setAvgTradeValue] = useState(100000); // value per trade
   const [savings, setSavings] = useState<number | null>(null);
   const [subscriptionType, setSubscriptionType] = useState<SubscriptionType>('none');
+  const { t, isRTL } = useTranslations(locale);
 
   const yearlyMultiplier = 12;
   const feeRate = 0.001;
@@ -79,7 +85,7 @@ export default function SavingsWidget() {
   `;
 
   return (
-    <div className="w-full max-w-2xl mx-auto mt-10">
+    <div className={`w-full max-w-2xl mx-auto mt-10 ${isRTL ? 'rtl' : 'ltr'}`}>
       <div className="bg-gradient-to-br from-[#181818] via-[#111111] to-[#111111] rounded-3xl border border-gray-800 shadow-xl p-8">
         {/* Subscription Toggle */}
         <div className="flex flex-col items-center gap-3 mb-6">
@@ -91,28 +97,36 @@ export default function SavingsWidget() {
           >
             <span className={toggleButtonClass} />
             <span className={`${toggleTextClass} ${subscriptionType === 'none' ? 'text-white' : 'text-gray-400'}`}>
-              Non-Subscriber
+              {t.savings.toggleLabels.nonSubscriber}
             </span>
             <span className={`${toggleTextClass} ${subscriptionType === 'old' ? 'text-white' : 'text-gray-400'}`}>
-              Existing Subscriber
+              {t.savings.toggleLabels.existingSubscriber}
             </span>
           </button>
           <p className="text-gray-400 text-center text-xs font-normal max-w-sm">
             {subscriptionType === 'none' 
-              ? "See how much you can save with our new plan"
-              : "Assumes you were paying 125 EGP/month (our old plan)"}
+              ? t.savings.nonSubscriberMessage
+              : t.savings.oldSubscriberMessage}
           </p>
         </div>
 
         {savings !== null && (
           <div className="text-center mb-4">
             <div className="text-2xl font-medium text-white mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-              Annual Savings
+              {t.savings.annualSavings}
             </div>
             <div className="flex justify-center items-end">
-              <span className="text-2xl font-bold text-[#B892FF]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                EGP {savings.toLocaleString()}
-              </span>
+              <div className="flex items-center gap-1">
+                {t.savings.currencyPosition === 'left' && (
+                  <span className="text-sm text-[#B892FF]">{t.savings.currency}</span>
+                )}
+                <span className="text-2xl font-bold text-[#B892FF]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                  {savings.toLocaleString('en-US')}
+                </span>
+                {t.savings.currencyPosition === 'right' && (
+                  <span className="text-sm text-[#B892FF]">{t.savings.currency}</span>
+                )}
+              </div>
             </div>
           </div>
         )}
@@ -121,12 +135,12 @@ export default function SavingsWidget() {
           {/* Trades per month */}
           <div className="space-y-3 w-full max-w-md">
             <h3 className="text-base font-medium text-white text-center mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-              Your average number of trades per month
+              {t.savings.tradesPerMonth}
             </h3>
             <div className="flex items-center justify-center gap-3 mb-2">
               <button className={buttonClass} onClick={() => setTrades(t => Math.max(1, t - 1))}>−</button>
               <div className={valueBox}>
-                {trades}
+                {trades.toLocaleString('en-US')}
               </div>
               <button className={buttonClass} onClick={() => setTrades(t => Math.min(100, t + 1))}>+</button>
             </div>
@@ -147,13 +161,20 @@ export default function SavingsWidget() {
           {/* Average trade value */}
           <div className="space-y-3 w-full max-w-md">
             <h3 className="text-base font-medium text-white text-center mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-              Your average value per trade
+              {t.savings.valuePerTrade}
             </h3>
             <div className="flex items-center justify-center gap-3 mb-2">
               <button className={buttonClass} onClick={() => setAvgTradeValue(v => Math.max(10000, v - 10000))}>−</button>
               <div className={`${valueBox} relative`}>
-                {avgTradeValue.toLocaleString()}
-                <span className="text-sm ml-1 text-white">EGP</span>
+                <div className="flex items-center gap-1">
+                  {t.savings.currencyPosition === 'left' && (
+                    <span className="text-sm text-white">{t.savings.currency}</span>
+                  )}
+                  {avgTradeValue.toLocaleString('en-US')}
+                  {t.savings.currencyPosition === 'right' && (
+                    <span className="text-sm text-white">{t.savings.currency}</span>
+                  )}
+                </div>
               </div>
               <button className={buttonClass} onClick={() => setAvgTradeValue(v => Math.min(250000, v + 10000))}>+</button>
             </div>

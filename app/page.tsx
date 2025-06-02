@@ -1,5 +1,9 @@
-import SavingsCalculator from '@/components/SavingsCalculator';
+import SavingsWidget from './components/SavingsCalculator';
 
-export default function WidgetPage() {
-  return <SavingsCalculator />;
+export default function HomePage() {
+  return (
+    <div>
+      <SavingsWidget locale="en" />
+    </div>
+  );
 }
