@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useTranslations, type Locale } from '../hooks/useTranslations';
 import { useSearchParams } from 'next/navigation';
 
@@ -9,7 +9,7 @@ interface SavingsWidgetProps {
   locale?: Locale;
 }
 
-export default function SavingsWidget({ locale: propLocale }: SavingsWidgetProps) {
+function SavingsWidgetInner({ locale: propLocale }: SavingsWidgetProps) {
   const searchParams = useSearchParams();
   const urlLocale = searchParams?.get('locale');
   const locale = (urlLocale === 'ar' ? 'ar' : propLocale) || 'en';
@@ -240,5 +240,13 @@ export default function SavingsWidget({ locale: propLocale }: SavingsWidgetProps
         </div>
       </div>
     </div>
+  );
+}
+
+export default function SavingsWidget(props: SavingsWidgetProps) {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SavingsWidgetInner {...props} />
+    </Suspense>
   );
 }
