@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useTranslations, type Locale } from '../hooks/useTranslations';
+import { useSearchParams } from 'next/navigation';
 
 type SubscriptionType = 'none' | 'old';
 
@@ -8,7 +9,11 @@ interface SavingsWidgetProps {
   locale?: Locale;
 }
 
-export default function SavingsWidget({ locale = 'en' }: SavingsWidgetProps) {
+export default function SavingsWidget({ locale: propLocale }: SavingsWidgetProps) {
+  const searchParams = useSearchParams();
+  const urlLocale = searchParams?.get('locale');
+  const locale = (urlLocale === 'ar' ? 'ar' : propLocale) || 'en';
+
   const [trades, setTrades] = useState(5); // monthly trades
   const [avgTradeValue, setAvgTradeValue] = useState(10000); // value per trade
   const [savings, setSavings] = useState<number | null>(null);
