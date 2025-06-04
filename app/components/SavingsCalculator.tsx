@@ -142,14 +142,20 @@ export default function SavingsWidget({ locale = 'en' }: SavingsWidgetProps) {
             <div className="flex justify-center items-end">
               <div className="flex items-center gap-1">
                 {t.savings.currencyPosition === 'left' && (
-                  <span className="text-sm text-[#B892FF]">{t.savings.currency}</span>
+                  <span className="text-sm text-[#B892FF]" 
+                        style={{ fontFamily: locale === 'en' ? 'DM Sans, sans-serif' : 'Kalligraaf Arabic' }}>
+                    {t.savings.currency}
+                  </span>
                 )}
                 <span className={`text-2xl font-bold text-[#B892FF] ${isRTL ? 'text-3xl' : ''}`}
                       style={{ fontFamily: isRTL ? 'Kalligraaf Arabic' : 'DM Sans, sans-serif' }}>
                   {savings.toLocaleString('en-US')}
                 </span>
                 {t.savings.currencyPosition === 'right' && (
-                  <span className="text-sm text-[#B892FF]">{t.savings.currency}</span>
+                  <span className="text-sm text-[#B892FF]"
+                        style={{ fontFamily: locale === 'en' ? 'DM Sans, sans-serif' : 'Kalligraaf Arabic' }}>
+                    {t.savings.currency}
+                  </span>
                 )}
               </div>
             </div>
