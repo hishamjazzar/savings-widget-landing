@@ -11,7 +11,7 @@
 
 /* 🌈 Thndr Brand Palette Setup */
 :root {
-  --brand-bg: #f5fefb;         /* super light mint */
+  --brand-bg: rgba(255, 255, 255, 0.05);  /* transparent white */
   --brand-fg: #121212;         /* deep gray/black for text */
   --brand-accent: #22c55e;     /* neon green */
   --brand-font-heading: 'DM Sans', sans-serif;
@@ -20,7 +20,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --brand-bg: #0a0a0a;
+    --brand-bg: rgba(255, 255, 255, 0.05);
     --brand-fg: #f5fefb;
   }
 }
