@@ -1,12 +1,21 @@
 @import "tailwindcss";
 
+/* Import Kalligraaf Arabic Light font */
+@font-face {
+  font-family: 'Kalligraaf Arabic';
+  src: url('/fonts/KalligraafArabicLight.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* 🌈 Thndr Brand Palette Setup */
 :root {
   --brand-bg: #f5fefb;         /* super light mint */
   --brand-fg: #121212;         /* deep gray/black for text */
   --brand-accent: #22c55e;     /* neon green */
   --brand-font-heading: 'DM Sans', sans-serif;
-  --brand-font-body: 'DM Sans', sans-serif;
+  --brand-font-body: 'DM Sans', 'Kalligraaf Arabic', sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -68,4 +77,21 @@ body {
   height: 6px;
   border-radius: 5px;
   border: none;
+}
+
+/* RTL (Arabic) text size adjustments */
+.rtl {
+  font-size: 1.15em; /* 15% bigger for Arabic text */
+}
+
+.rtl h3 {
+  font-size: 1.2em;
+}
+
+.rtl .text-sm {
+  font-size: 0.95em; /* Slightly bigger than default small text */
+}
+
+.rtl .text-xs {
+  font-size: 0.85em; /* Slightly bigger than default extra small text */
 }

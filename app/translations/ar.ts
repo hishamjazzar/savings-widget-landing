@@ -2,8 +2,8 @@ export const ar = {
   savings: {
     title: "التوفير",
     annualSavings: "التوفير السنوي",
-    tradesPerMonth: "متوسط عدد تداولاتك الشهرية",
-    valuePerTrade: "متوسط قيمة التداول",
+    tradesPerMonth: "متوسط عدد أوامر التداول في الشهر",
+    valuePerTrade: "متوسط قيمة الأمر الواحد",
     currency: "جنيه",
     currencyPosition: "left",
     nonSubscriberMessage: "اكتشف كم يمكنك أن توفر مع خطتنا الجديدة",

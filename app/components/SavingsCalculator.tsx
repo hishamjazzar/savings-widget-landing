@@ -56,7 +56,7 @@ export default function SavingsWidget({ locale = 'en' }: SavingsWidgetProps) {
   const buttonClass = `
     h-7 w-7 rounded-full border border-white text-white
     hover:bg-gray-800 transition-all duration-200 
-    flex items-center justify-center font-medium text-base bg-transparent
+    flex items-center justify-center bg-transparent
   `;
   const valueBox = `
     text-white text-lg font-medium border-[3px] border-white 
@@ -84,6 +84,18 @@ export default function SavingsWidget({ locale = 'en' }: SavingsWidgetProps) {
     z-10 w-[164px] text-center text-sm transition-colors duration-200
   `;
 
+  const MinusIcon = () => (
+    <svg width="10" height="2" viewBox="0 0 14 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M14 1H0" stroke="white" strokeWidth="2"/>
+    </svg>
+  );
+
+  const PlusIcon = () => (
+    <svg width="10" height="10" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M7 0V14M14 7H0" stroke="white" strokeWidth="2"/>
+    </svg>
+  );
+
   const handleAvgTradeValueChange = (newValue: number) => {
     // Ensure the value is rounded to the nearest 1000
     const roundedValue = Math.round(newValue / 1000) * 1000;
@@ -104,14 +116,17 @@ export default function SavingsWidget({ locale = 'en' }: SavingsWidgetProps) {
             aria-checked={subscriptionType === 'old'}
           >
             <span className={toggleButtonClass} />
-            <span className={`${toggleTextClass} ${subscriptionType === 'none' ? 'text-white' : 'text-gray-400'}`}>
+            <span className={`${toggleTextClass} ${subscriptionType === 'none' ? 'text-white' : 'text-gray-400'}`}
+                  style={{ fontFamily: isRTL ? 'Kalligraaf Arabic' : 'DM Sans, sans-serif' }}>
               {t.savings.toggleLabels.nonSubscriber}
             </span>
-            <span className={`${toggleTextClass} ${subscriptionType === 'old' ? 'text-white' : 'text-gray-400'}`}>
+            <span className={`${toggleTextClass} ${subscriptionType === 'old' ? 'text-white' : 'text-gray-400'}`}
+                  style={{ fontFamily: isRTL ? 'Kalligraaf Arabic' : 'DM Sans, sans-serif' }}>
               {t.savings.toggleLabels.existingSubscriber}
             </span>
           </button>
-          <p className="text-gray-400 text-center text-xs font-normal max-w-sm">
+          <p className="text-gray-400 text-center text-xs font-normal max-w-sm"
+             style={{ fontFamily: isRTL ? 'Kalligraaf Arabic' : 'DM Sans, sans-serif' }}>
             {subscriptionType === 'none' 
               ? t.savings.nonSubscriberMessage
               : t.savings.oldSubscriberMessage}
@@ -120,7 +135,8 @@ export default function SavingsWidget({ locale = 'en' }: SavingsWidgetProps) {
 
         {savings !== null && (
           <div className="text-center mb-4">
-            <div className="text-2xl font-medium text-white mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+            <div className={`text-2xl font-medium text-white mb-2 ${isRTL ? 'text-2xl' : ''}`}
+                 style={{ fontFamily: isRTL ? 'Kalligraaf Arabic' : 'DM Sans, sans-serif' }}>
               {t.savings.annualSavings}
             </div>
             <div className="flex justify-center items-end">
@@ -128,7 +144,8 @@ export default function SavingsWidget({ locale = 'en' }: SavingsWidgetProps) {
                 {t.savings.currencyPosition === 'left' && (
                   <span className="text-sm text-[#B892FF]">{t.savings.currency}</span>
                 )}
-                <span className="text-2xl font-bold text-[#B892FF]" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                <span className={`text-2xl font-bold text-[#B892FF] ${isRTL ? 'text-3xl' : ''}`}
+                      style={{ fontFamily: isRTL ? 'Kalligraaf Arabic' : 'DM Sans, sans-serif' }}>
                   {savings.toLocaleString('en-US')}
                 </span>
                 {t.savings.currencyPosition === 'right' && (
@@ -142,15 +159,20 @@ export default function SavingsWidget({ locale = 'en' }: SavingsWidgetProps) {
         <div className="flex flex-col items-center space-y-6">
           {/* Trades per month */}
           <div className="space-y-3 w-full max-w-md">
-            <h3 className="text-base font-medium text-white text-center mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+            <h3 className="text-base font-medium text-white text-center mb-4"
+                style={{ fontFamily: isRTL ? 'Kalligraaf Arabic' : 'DM Sans, sans-serif' }}>
               {t.savings.tradesPerMonth}
             </h3>
             <div className="flex items-center justify-center gap-3 mb-2">
-              <button className={buttonClass} onClick={() => setTrades(t => Math.max(1, t - 1))}>−</button>
-              <div className={valueBox}>
+              <button className={buttonClass} onClick={() => setTrades(t => Math.max(1, t - 1))}>
+                <MinusIcon />
+              </button>
+              <div className={valueBox} style={{ fontFamily: isRTL ? 'Kalligraaf Arabic' : 'DM Sans, sans-serif' }}>
                 {trades.toLocaleString('en-US')}
               </div>
-              <button className={buttonClass} onClick={() => setTrades(t => Math.min(100, t + 1))}>+</button>
+              <button className={buttonClass} onClick={() => setTrades(t => Math.min(100, t + 1))}>
+                <PlusIcon />
+              </button>
             </div>
             <div className="px-8">
               <input
@@ -168,16 +190,16 @@ export default function SavingsWidget({ locale = 'en' }: SavingsWidgetProps) {
 
           {/* Average trade value */}
           <div className="space-y-3 w-full max-w-md">
-            <h3 className="text-base font-medium text-white text-center mb-2" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+            <h3 className="text-base font-medium text-white text-center mb-4"
+                style={{ fontFamily: isRTL ? 'Kalligraaf Arabic' : 'DM Sans, sans-serif' }}>
               {t.savings.valuePerTrade}
             </h3>
             <div className="flex items-center justify-center gap-3 mb-2">
-              <button 
-                className={buttonClass} 
-                onClick={() => handleAvgTradeValueChange(avgTradeValue - 1000)}
-              >−</button>
+              <button className={buttonClass} onClick={() => handleAvgTradeValueChange(avgTradeValue - 1000)}>
+                <MinusIcon />
+              </button>
               <div className={`${valueBox} relative`}>
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1" style={{ fontFamily: isRTL ? 'Kalligraaf Arabic' : 'DM Sans, sans-serif' }}>
                   {t.savings.currencyPosition === 'left' && (
                     <span className="text-sm text-white">{t.savings.currency}</span>
                   )}
@@ -187,10 +209,9 @@ export default function SavingsWidget({ locale = 'en' }: SavingsWidgetProps) {
                   )}
                 </div>
               </div>
-              <button 
-                className={buttonClass} 
-                onClick={() => handleAvgTradeValueChange(avgTradeValue + 1000)}
-              >+</button>
+              <button className={buttonClass} onClick={() => handleAvgTradeValueChange(avgTradeValue + 1000)}>
+                <PlusIcon />
+              </button>
             </div>
             <div className="px-8">
               <input
